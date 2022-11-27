@@ -1,6 +1,6 @@
 import { competitionEvaluator } from './competitionEvaluator';
 
-export async function scrapeFixtures(page, competitionsNames) {
+export async function scrapeCompetitions(page, competitionsNames) {
   const allCompetitions = await Promise.all(
     competitionsNames.map(async (competitionName) => {
       const competitionSelector = `div:has(> span.comp_head:has-text("${competitionName}"))`;
