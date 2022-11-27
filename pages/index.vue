@@ -1,3 +1,3 @@
 <template>
-  <main class="grow">Placeholder Text</main>
+  <main class="grow"><AppBanner /></main>
 </template>
