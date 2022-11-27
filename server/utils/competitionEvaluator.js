@@ -77,8 +77,16 @@ export function competitionEvaluator(CompetitionNodes) {
           : null;
 
         const isFree = item.classList.contains('chan_live_free') ? true : false;
-        const isHD = name.includes('HD') ? true : false;
-        const mainInfo = { name, isFree, isHD };
+
+        let isHD = false;
+        let is4K = false;
+        if (name.includes('4K')) {
+          is4K = true;
+          isHD = true;
+        } else if (name.includes('HD')) {
+          isHD = true;
+        }
+        const mainInfo = { name, isFree, is4K, isHD };
 
         const channel = { mainInfo, satInfo };
 
