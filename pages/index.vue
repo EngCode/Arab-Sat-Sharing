@@ -1,3 +1,6 @@
 <template>
-  <main class="grow"><AppBanner /></main>
+  <main class="grow">
+    <AppBanner />
+    <CompetitionsWrapper />
+  </main>
 </template>
