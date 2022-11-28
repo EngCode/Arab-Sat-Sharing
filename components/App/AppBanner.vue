@@ -1,9 +1,5 @@
 <script setup>
-  // const { data, error } = await usePlaywright().fetchData();
-
-  // Testing
-  const data = usePlaywright().fetchSampleData();
-  const error = ref(false);
+  const { data, error } = await usePlaywright().fetchSampleData();
 
   const arDate = computed(() => {
     // Convert the recieved dd/mm/yyyy format to yyyy/mm/dd
@@ -21,7 +17,7 @@
 </script>
 
 <template>
-  <section class="container py-4 [direction:rtl]">
+  <section class="py-4 [direction:rtl]">
     <div
       class="rounded border border-gray-100 py-2 px-4 text-center dark:border-blue-500"
     >

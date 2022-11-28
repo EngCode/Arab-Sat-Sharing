@@ -1,12 +1,20 @@
 <script setup>
-  defineProps({ fixture: { type: Object, required: true } });
+  const props = defineProps({ match: { type: Object, required: true } });
+
+  const mena = props.match.channels.mena;
+  const free = props.match.channels.free;
+  const encrypted = props.match.channels.encrypted;
 </script>
 
 <template>
-  <div class="flex flex-col gap-2 rounded bg-gray-100 p-4 dark:bg-blue-500">
-    <MatchCompetition :competition="fixture.competition" />
-    <MatchHeading :teams="fixture.match" :time="fixture.time" />
-    <MatchBeIN :bein-channels="fixture.channels.beinMENA" />
-    <MatchChannels :channels="fixture.channels.others" />
+  <div
+    v-if="match"
+    class="flex flex-col gap-2 rounded bg-gray-100 p-4 dark:bg-blue-500"
+  >
+    <MatchCompetition :competition="match.competition" />
+    <MatchHeading :teams="match.teams" :time="match.time" />
+    <MatchChannels :channels="mena"> القنوات العربية </MatchChannels>
+    <MatchChannels :channels="free"> القنوات المجانية </MatchChannels>
+    <MatchChannels :channels="encrypted"> القنوات المشفرة </MatchChannels>
   </div>
 </template>

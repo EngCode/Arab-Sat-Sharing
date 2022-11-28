@@ -9,13 +9,14 @@
   <div
     v-auto-animate
     v-if="channels.length"
-    class="border-t border-gray-200 py-2 dark:border-blue-400"
+    class="border-t border-gray-200 pt-2 dark:border-blue-400"
   >
     <div class="flex items-center justify-between gap-2 [direction:rtl]">
       <div>
         <Icon name="majesticons:tv-old-line" />
         <p class="mr-2 inline-block">
-          القنوات الناقلة
+          <slot />
+
           <button
             class="hover:text-blue-300 hover:transition-colors dark:hover:text-blue-200"
           >
@@ -28,7 +29,15 @@
         </BaseModal>
       </div>
 
-      <BaseToggleButton v-model:is-active="isChannelsVisible" />
+      <div class="flex items-center gap-2">
+        <div
+          class="grid h-3 w-3 place-content-center rounded-full bg-blue-400 p-3 text-sm font-semibold text-white"
+        >
+          <p>{{ channels.length }}</p>
+        </div>
+
+        <BaseToggleButton v-model:is-active="isChannelsVisible" />
+      </div>
     </div>
 
     <div class="mt-2 flex flex-col gap-2" v-if="isChannelsVisible">

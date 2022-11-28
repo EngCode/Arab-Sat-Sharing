@@ -17,7 +17,7 @@
 
       <div class="flex items-center gap-2">
         <div
-          class="grid h-3 w-3 place-content-center rounded-full bg-blue-300 p-3 text-sm font-semibold text-white dark:bg-blue-200"
+          class="grid h-3 w-3 place-content-center rounded-full bg-blue-300 p-3.5 font-semibold text-white dark:bg-blue-200"
         >
           <p>{{ competition.matches.length }}</p>
         </div>
@@ -26,6 +26,6 @@
       </div>
     </div>
 
-    <MatchWrapper :matches="competition.matches" v-if="isMatchesVisible" />
+    <MatchesWrapper :matches="competition.matches" v-if="isMatchesVisible" />
   </div>
 </template>

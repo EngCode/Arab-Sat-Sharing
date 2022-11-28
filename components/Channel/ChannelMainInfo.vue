@@ -8,10 +8,16 @@
   <div
     class="flex flex-col justify-between 2xs:flex-row-reverse 2xs:items-center"
   >
-    <!-- isFree & isHD -->
+    <!-- isFree & Resoultion -->
     <div class="flex items-center gap-1.5">
       <Icon
-        v-if="channelMainInfo.isHD"
+        v-if="channelMainInfo.is4K"
+        name="bi:badge-4k-fill"
+        size="14px"
+        class="text-green-900 dark:text-green-200"
+      />
+      <Icon
+        v-else-if="channelMainInfo.isHD"
         name="bi:badge-hd-fill"
         size="14px"
         class="text-green-700 dark:text-green-400"
