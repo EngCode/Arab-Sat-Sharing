@@ -1,3 +1,3 @@
 export function isProduction() {
-  return process.env.NODE_ENV === 'production' ? true : false;
+  return process.env.IS_PRODUCTION === 'true' ? true : false;
 }

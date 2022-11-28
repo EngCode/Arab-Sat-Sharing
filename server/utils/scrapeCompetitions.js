@@ -13,11 +13,14 @@ export async function scrapeCompetitions(page, competitionsNames) {
         competitionEvaluator
       );
 
+      // Filter the array from null values
+      const matches = competitionMatches.filter((match) => match !== null);
+
       // Add only the competitions that has matches and set the others to null (to be filtered)
-      return competitionMatches.length
+      return matches.length
         ? {
             name: competitionName,
-            matches: competitionMatches,
+            matches,
           }
         : null;
     })

@@ -10,21 +10,18 @@ export function competitionEvaluator(CompetitionNodes) {
     const competition = formatCompetitionName(
       competitionNode.querySelector('.comp_head').textContent
     );
-
     const matchNode = competitionNode.nextElementSibling;
-    const match = formatMatchName(
-      matchNode.querySelector('.fLeft').textContent
-    );
 
-    const time = getEgyTime(
-      matchNode.querySelector('.fLeft_time_live').innerText
-    );
+    const teams = getMatchName(matchNode);
+    if (!teams) return null;
 
-    const channels = getChannels(matchNode.querySelector('.fLeft_live')) || [];
+    const time = getEgyTime(matchNode);
+
+    const channels = getChannels(matchNode) || [];
 
     return {
       competition,
-      match,
+      teams,
       time,
       channels,
     };
@@ -36,12 +33,17 @@ export function competitionEvaluator(CompetitionNodes) {
     return { name, stage };
   }
 
-  function formatMatchName(fullMatchName) {
-    const [homeTeam, awayTeam] = fullMatchName.split(' v ');
-    return { fullText: fullMatchName, homeTeam, awayTeam };
+  function getMatchName(matchNode) {
+    const fullText = matchNode.querySelector('.fLeft').textContent;
+    if (!fullText.includes(' v ')) return null;
+
+    const [homeTeam, awayTeam] = fullText.split(' v ');
+    return { fullText, homeTeam, awayTeam };
   }
 
-  function getEgyTime(originalTime) {
+  function getEgyTime(matchNode) {
+    const originalTime = matchNode.querySelector('.fLeft_time_live').innerText;
+
     const fullTime = originalTime.split(' ')[1];
     const originalHours = fullTime.split(':')[0];
     const formattedHours = (originalHours - 12).toString().padStart(2, '0');
@@ -52,93 +54,150 @@ export function competitionEvaluator(CompetitionNodes) {
     return { full: fullEgyptTime, raw: rawTime, postfix };
   }
 
-  function getChannels(allChannels) {
-    const beinMENA = [];
-    const others = [];
-    const channelsList = allChannels.querySelectorAll(
-      '.chan_live_free, .chan_live_not_free'
-    );
+  function getChannels(matchNode) {
+    const allChannels = matchNode
+      .querySelector('.fLeft_live')
+      .querySelectorAll('.chan_live_free, .chan_live_not_free');
+
+    const mena = getMenaChannels(allChannels);
+    const { free, encrypted } = getOtherChannels(allChannels);
+
+    return { mena, free, encrypted };
+  }
+
+  function getMenaChannels(channelsList) {
+    const menaChannels = [];
 
     channelsList.forEach((item) => {
-      const name = item.textContent.trim().replace(' 📺', '');
+      let name = item.textContent.trim().replace(' 📺', '');
 
-      if (name.includes('[app]')) return; // Don't add channels that streams on mobile apps
+      if (!isMenaChannel(name)) return;
 
-      if (name.includes('beIN Sports MENA')) {
-        const beinMENAChannel = {
-          name: name.replace('beIN Sports MENA ', ''),
-          commentator: null,
-        };
-        beinMENA.push(beinMENAChannel);
-      } else {
-        const onMouseOverText = item.getAttribute('onmouseover');
-        const satInfo = onMouseOverText
-          ? getChannelMeta(onMouseOverText)
-          : null;
+      name = name.replace('beIN Sports MENA ', '');
+      const { is4K, isHD } = getChannelQuality(name);
+      const isFree = isFreeChannel(item);
+      const mainInfo = { name, isFree, is4K, isHD };
 
-        const isFree = item.classList.contains('chan_live_free') ? true : false;
+      const onMouseOverText = item.getAttribute('onmouseover');
+      const satInfo = onMouseOverText ? getChannelMeta(onMouseOverText) : null;
 
-        let isHD = false;
-        let is4K = false;
-        if (name.includes('4K')) {
-          is4K = true;
-          isHD = true;
-        } else if (name.includes('HD')) {
-          isHD = true;
-        }
-        const mainInfo = { name, isFree, is4K, isHD };
+      const channel = { mainInfo, satInfo };
 
-        const channel = { mainInfo, satInfo };
-
-        // Only add the channel if satInfo is not empty
-        // (This means that the channel is not covered in MENA region. See getChannelMeta and isSatInMENA for more)
-        // (NOTE): For the provided sample page, there's no text in 'onmouseover' attribute
-        //         which results in no satInfo, hence no channels will be added even if they are at MENA coverage!
-        if (channel.satInfo?.length) others.push(channel);
-      }
+      // Only add the channel if satInfo is not empty
+      if (channel.satInfo?.length) menaChannels.push(channel);
     });
 
-    sortBeinChannels(beinMENA);
-    sortChannels(others);
-    return { beinMENA, others };
+    sortSatInfo(menaChannels);
+    sortMenaChannelsNames(menaChannels);
+    return menaChannels;
   }
 
-  function sortBeinChannels(beinChannels) {
-    // Sorting Priority: Global, Premium , Max then other channels
-    const compareFunction = (a, b) => {
-      const globalA = a.name.startsWith('Global');
-      const globalB = b.name.startsWith('Global');
-      const premiumA = a.name.startsWith('Premium');
-      const premiumB = b.name.startsWith('Premium');
-      const maxA = a.name.startsWith('Max');
-      const maxB = b.name.startsWith('Max');
+  function getOtherChannels(channelsList) {
+    const free = [];
+    const encrypted = [];
 
-      if (globalA !== globalB) return globalA ? -1 : 1;
-      else if (premiumA !== premiumB) return premiumA ? -1 : 1;
-      else if (maxA !== maxB) return maxA ? -1 : 1;
-      else return a.name.localeCompare(b.name);
+    channelsList.forEach((item) => {
+      let name = item.textContent.trim().replace(' 📺', '');
+
+      // Don't add channels that streams on mobile apps
+      if (isOnlineChannel(name) || isMenaChannel(name)) return;
+
+      const isFree = isFreeChannel(item);
+      const { is4K, isHD } = getChannelQuality(name);
+      const mainInfo = { name, isFree, is4K, isHD };
+
+      const onMouseOverText = item.getAttribute('onmouseover');
+      const satInfo = onMouseOverText ? getChannelMeta(onMouseOverText) : null;
+
+      const channel = { mainInfo, satInfo };
+
+      // Only add the channel if satInfo is not empty
+      // (This means that the channel is not covered in MENA region. See getChannelMeta and isSatInMENA for more)
+      // (NOTE): For the provided sample page, there's no text in 'onmouseover' attribute
+      //         which results in no satInfo, hence no channels will be added even if they are at MENA coverage!
+      if (channel.satInfo?.length)
+        isFree ? free.push(channel) : encrypted.push(channel);
+    });
+
+    sortSatInfo(free);
+    sortSatInfo(encrypted);
+    return { free, encrypted };
+  }
+
+  function getChannelQuality(channelName) {
+    let isHD = false;
+    let is4K = false;
+
+    if (channelName.includes('4K')) {
+      is4K = true;
+      isHD = true;
+    } else if (channelName.includes('HD')) {
+      isHD = true;
+    }
+
+    return { is4K, isHD };
+  }
+
+  function isMenaChannel(channelName) {
+    return channelName.includes('beIN Sports MENA') ||
+      channelName.includes('Al Kass')
+      ? true
+      : false;
+  }
+
+  function isOnlineChannel(channelName) {
+    return channelName.includes('[app]') ? true : false;
+  }
+
+  function isFreeChannel(channel) {
+    return channel.classList.contains('chan_live_free') ? true : false;
+  }
+
+  function sortSatInfo(channels) {
+    const compareFunction = (a, b) => {
+      const satValueA = a.satPosition.value;
+      const satValueB = b.satPosition.value;
+      const satDirectionA = a.satPosition.direction;
+      const satDirectionB = b.satPosition.direction;
+
+      // W direction first, then E direction.
+      if (satDirectionA !== satDirectionB)
+        return satDirectionA > satDirectionB ? -1 : 1;
+      // Sat Values in ascending order
+      else if (satValueA !== satValueB) return satValueA > satValueB ? 1 : -1;
+      else return 0;
     };
 
-    beinChannels.sort(compareFunction);
+    channels.forEach((channel) => channel.satInfo.sort(compareFunction));
   }
 
-  function sortChannels(channels) {
-    channels.forEach((channel) => {
-      if (channel.satInfo) {
-        channel.satInfo.sort((a, b) => {
-          if (a.satPosition.value > b.satPosition.value) return 1;
-          if (a.satPosition.value < b.satPosition.value) return -1;
-          return 0;
-        });
+  function sortMenaChannelsNames(menaChannels) {
+    // Sorting Priority:
+    // 1- Free
+    // 2- Bein (Global, Premium , Max then other channels)
+    // 3- Al Kass
+    // 4- AD
+    const compareFunction = (a, b) => {
+      const freeA = a.mainInfo.isFree;
+      const freeB = b.mainInfo.isFree;
+      const globalA = a.mainInfo.name.startsWith('Global');
+      const globalB = b.mainInfo.name.startsWith('Global');
+      const premiumA = a.mainInfo.name.startsWith('Premium');
+      const premiumB = b.mainInfo.name.startsWith('Premium');
+      const maxA = a.mainInfo.name.startsWith('Max');
+      const maxB = b.mainInfo.name.startsWith('Max');
+      const alkassA = b.mainInfo.name.startsWith('Al Kass');
+      const alkassB = b.mainInfo.name.startsWith('Al Kass');
 
-        channel.satInfo.sort((a, b) => {
-          // Sort the sattelites with the 'W' direction, then 'E' direction
-          if (a.satPosition.direction < b.satPosition.direction) return 1;
-          if (a.satPosition.direction > b.satPosition.direction) return -1;
-          return 0;
-        });
-      }
-    });
+      if (freeA !== freeB) return freeA ? -1 : 1;
+      else if (globalA !== globalB) return globalA ? -1 : 1;
+      else if (premiumA !== premiumB) return premiumA ? -1 : 1;
+      else if (maxA !== maxB) return maxA ? -1 : 1;
+      else if (alkassA !== alkassB) return alkassA ? -1 : 1;
+      else return a.mainInfo.name.localeCompare(b.mainInfo.name);
+    };
+
+    menaChannels.sort(compareFunction);
   }
 
   function getChannelMeta(metaText) {
@@ -147,7 +206,8 @@ export function competitionEvaluator(CompetitionNodes) {
     const satNameSelector = 'class=rest_col';
     const channelFrequencySelector = 'class="freq_col"';
     const channelSymbolSelector = 'class=rest_col';
-    const channelEncryptionSelector = 'class=enc_not_live' || 'class=enc_live';
+    const channelEncryptionNotLiveSelector = 'class=enc_not_live';
+    const channelEncryptionLiveSelector = 'class=enc_live';
 
     const meta = [];
 
@@ -173,11 +233,21 @@ export function competitionEvaluator(CompetitionNodes) {
         getVariableValue(channelSymbolSelector, channelFrequencySample);
 
       // Channel Encryption
-      const { value: tempEncryption, newSample: channelEncryptionSample } =
-        getVariableValue(channelEncryptionSelector, channelSymbolSample);
-      const encryption = formatEncryption(tempEncryption);
-
-      sourceSample = channelEncryptionSample;
+      let encryption;
+      if (channelSymbolSample.includes(channelEncryptionNotLiveSelector)) {
+        const { value: tempEncryption, newSample: channelEncryptionSample } =
+          getVariableValue(
+            channelEncryptionNotLiveSelector,
+            channelSymbolSample
+          );
+        encryption = formatEncryption(tempEncryption);
+        sourceSample = channelEncryptionSample;
+      } else if (channelSymbolSample.includes(channelEncryptionLiveSelector)) {
+        const { value: tempEncryption, newSample: channelEncryptionSample } =
+          getVariableValue(channelEncryptionLiveSelector, channelSymbolSample);
+        encryption = formatEncryption(tempEncryption);
+        sourceSample = channelEncryptionSample;
+      }
 
       const result = {
         satName,
@@ -213,10 +283,10 @@ export function competitionEvaluator(CompetitionNodes) {
 
   function formatEncryption(encryption) {
     return encryption
-      .replace('HD ', '')
-      .replace('FTA ', '')
+      .replace('HD', '')
       .replace('(', '')
-      .replace(')', '');
+      .replace(')', '')
+      .trim();
   }
 
   function isSatInMENA(satInfo) {
