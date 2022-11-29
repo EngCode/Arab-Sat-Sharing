@@ -87,7 +87,6 @@ export function competitionEvaluator(CompetitionNodes) {
       if (channel.satInfo?.length) menaChannels.push(channel);
     });
 
-    sortSatInfo(menaChannels);
     sortMenaChannelsNames(menaChannels);
     return menaChannels;
   }
@@ -119,8 +118,6 @@ export function competitionEvaluator(CompetitionNodes) {
         isFree ? free.push(channel) : encrypted.push(channel);
     });
 
-    sortSatInfo(free);
-    sortSatInfo(encrypted);
     return { free, encrypted };
   }
 
@@ -153,33 +150,21 @@ export function competitionEvaluator(CompetitionNodes) {
     return channel.classList.contains('chan_live_free') ? true : false;
   }
 
-  function sortSatInfo(channels) {
-    const compareFunction = (a, b) => {
-      const satValueA = a.satPosition.value;
-      const satValueB = b.satPosition.value;
-      const satDirectionA = a.satPosition.direction;
-      const satDirectionB = b.satPosition.direction;
-
-      // W direction first, then E direction.
-      if (satDirectionA !== satDirectionB)
-        return satDirectionA > satDirectionB ? -1 : 1;
-      // Sat Values in ascending order
-      else if (satValueA !== satValueB) return satValueA > satValueB ? 1 : -1;
-      else return 0;
-    };
-
-    channels.forEach((channel) => channel.satInfo.sort(compareFunction));
-  }
-
   function sortMenaChannelsNames(menaChannels) {
     // Sorting Priority:
     // 1- Free
-    // 2- Bein (Global, Premium , Max then other channels)
-    // 3- Al Kass
-    // 4- AD
+    // 2- 4K
+    // 3- HD
+    // 4- Bein (Global, Premium , Max then other channels)
+    // 5- Al Kass
+    // 6- By Name
     const compareFunction = (a, b) => {
       const freeA = a.mainInfo.isFree;
       const freeB = b.mainInfo.isFree;
+      const fourKA = a.mainInfo.is4K;
+      const fourKB = b.mainInfo.is4K;
+      const hdA = a.mainInfo.isHD;
+      const hdB = b.mainInfo.isHD;
       const globalA = a.mainInfo.name.startsWith('Global');
       const globalB = b.mainInfo.name.startsWith('Global');
       const premiumA = a.mainInfo.name.startsWith('Premium');
@@ -190,6 +175,8 @@ export function competitionEvaluator(CompetitionNodes) {
       const alkassB = b.mainInfo.name.startsWith('Al Kass');
 
       if (freeA !== freeB) return freeA ? -1 : 1;
+      if (fourKA !== fourKB) return fourKA ? -1 : 1;
+      if (hdA !== hdB) return hdA ? -1 : 1;
       else if (globalA !== globalB) return globalA ? -1 : 1;
       else if (premiumA !== premiumB) return premiumA ? -1 : 1;
       else if (maxA !== maxB) return maxA ? -1 : 1;
@@ -259,7 +246,26 @@ export function competitionEvaluator(CompetitionNodes) {
       if (isSatInMENA(result)) meta.push(result);
     }
 
+    sortChannelMeta(meta);
     return meta;
+  }
+
+  function sortChannelMeta(channelMeta) {
+    const compareFunction = (a, b) => {
+      const satValueA = a.satPosition.value;
+      const satValueB = b.satPosition.value;
+      const satDirectionA = a.satPosition.direction;
+      const satDirectionB = b.satPosition.direction;
+
+      // W direction first, then E direction.
+      if (satDirectionA !== satDirectionB)
+        return satDirectionA > satDirectionB ? -1 : 1;
+      // Sat Values in ascending order
+      else if (satValueA !== satValueB) return satValueA > satValueB ? 1 : -1;
+      else return 0;
+    };
+
+    channelMeta.sort(compareFunction);
   }
 
   function getVariableValue(variableSelector, sample) {
