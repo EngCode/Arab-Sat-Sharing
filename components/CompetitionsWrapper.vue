@@ -1,6 +1,5 @@
 <script setup>
   const { data, error } = await usePlaywright().fetchData();
-  console.log(data);
 </script>
 
 <template>

@@ -1,5 +1,5 @@
 <script setup>
-  const { data, error } = await usePlaywright().fetchSampleData();
+  const { data, error } = await usePlaywright().fetchData();
 
   const arDate = computed(() => {
     // Convert the recieved dd/mm/yyyy format to yyyy/mm/dd
