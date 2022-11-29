@@ -1,6 +1,5 @@
-import { chromium as chromiumDev } from 'playwright-chromium';
-import { chromium as chromiumProd } from 'playwright-core';
-import bundledChromium from 'chrome-aws-lambda';
+import { chromium } from 'playwright-chromium';
+import { isProduction } from '../helpers/isProduction';
 
 const args = [
   '--no-sandbox',
@@ -29,9 +28,5 @@ const args = [
 ];
 
 export async function initPlaywrightBrowser() {
-  const executablePath = await bundledChromium.executablePath;
-
-  return executablePath
-    ? await chromiumProd.launch({ executablePath, headless: true, args })
-    : await chromiumDev.launch({ headless: false, args });
+  return await chromium.launch({ headless: isProduction(), args });
 }

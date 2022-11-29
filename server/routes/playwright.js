@@ -6,7 +6,7 @@ import { scrapeCompetitions } from '../utils/scrapeCompetitions';
 import { getDate } from '../helpers/getDate';
 
 // Config
-const liveOnSatPageUrl = getPageLink(); // Could be live or sample page,depending on procces.env
+const liveOnSatPageUrl = getPageLink(); // Could be live or sample page,depending on procces.env.IS_PRODUCTION
 const supportedCompetitons = getSupportedCompetitons();
 const timeout = Number(process.env.PLAYWRIGHT_TIMEOUT);
 const date = getDate().today();

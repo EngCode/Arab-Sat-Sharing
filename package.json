@@ -35,7 +35,6 @@
     "js-yaml": "^4.1.0",
     "nuxt": "3.0.0",
     "nuxt-icon": "^0.1.7",
-    "playwright-core": "1.14.1",
     "prettier": "^2.7.1",
     "prettier-plugin-tailwindcss": "^0.2.0",
     "sass": "^1.56.1",
