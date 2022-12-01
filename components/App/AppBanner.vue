@@ -1,6 +1,5 @@
 <script setup>
   const { data } = await usePlaywright().fetchData();
-  const arDate = data.value.date.ar;
 </script>
 
 <template>
@@ -9,7 +8,13 @@
       class="rounded border border-gray-100 py-2 px-4 text-center dark:border-blue-500"
     >
       <h1 class="text-xl font-semibold">مباريات اليوم</h1>
-      <h2 class="font-medium text-blue-300 dark:text-blue-200">{{ arDate }}</h2>
+      <h2 class="font-medium text-blue-300 dark:text-blue-200">
+        {{ data.date.ar }}
+      </h2>
+
+      <BaseInfo>اضغط علي القناة لمعرفة جميع الترددات المتاحة</BaseInfo>
+      <BaseInfo>جميع مواعيد المباريات بتوقيت مصر (+2 GMT)</BaseInfo>
+      <BaseInfo>يتم تحديث المباريات يوميا الساعة 12:30 بتوقيت مصر</BaseInfo>
     </div>
   </section>
 </template>

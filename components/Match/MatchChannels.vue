@@ -14,19 +14,7 @@
     <div class="flex items-center justify-between gap-2 [direction:rtl]">
       <div>
         <Icon name="majesticons:tv-old-line" />
-        <p class="mr-2 inline-block">
-          <slot />
-
-          <button
-            class="hover:text-blue-300 hover:transition-colors dark:hover:text-blue-200"
-          >
-            <Icon name="fe:info" size="14" @click="isModalVisible = true" />
-          </button>
-        </p>
-
-        <BaseModal v-model:is-modal-visible="isModalVisible">
-          <p class="caption">اضغط علي القناة لمعرفة التردد ومعلومات اخري</p>
-        </BaseModal>
+        <p class="mr-2 inline-block"><slot /></p>
       </div>
 
       <div class="flex items-center gap-2">
