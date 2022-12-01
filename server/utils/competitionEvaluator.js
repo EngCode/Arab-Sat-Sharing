@@ -15,7 +15,7 @@ export function competitionEvaluator(CompetitionNodes) {
     const teams = getMatchName(matchNode);
     if (!teams) return null;
 
-    const time = getEgyTime(matchNode);
+    const time = get12HoursTime(matchNode);
 
     const channels = getChannels(matchNode) || [];
 
@@ -41,17 +41,20 @@ export function competitionEvaluator(CompetitionNodes) {
     return { fullText, homeTeam, awayTeam };
   }
 
-  function getEgyTime(matchNode) {
+  function get12HoursTime(matchNode) {
     const originalTime = matchNode.querySelector('.fLeft_time_live').innerText;
 
     const fullTime = originalTime.split(' ')[1];
     const originalHours = fullTime.split(':')[0];
-    const formattedHours = (originalHours - 12).toString().padStart(2, '0');
+    const formattedHours =
+      originalHours > 12
+        ? (originalHours - 12).toString().padStart(2, '0')
+        : originalHours;
     const minutes = fullTime.split(':')[1].padStart(2, '0');
-    const postfix = originalHours <= 12 ? 'AM' : 'PM';
+    const postfix = originalHours < 12 ? 'AM' : 'PM';
     const rawTime = `${formattedHours}:${minutes}`;
-    const fullEgyptTime = `${rawTime} ${postfix}`;
-    return { full: fullEgyptTime, raw: rawTime, postfix };
+    const full12HoursTime = `${rawTime} ${postfix}`;
+    return { full: full12HoursTime, raw: rawTime, postfix };
   }
 
   function getChannels(matchNode) {
