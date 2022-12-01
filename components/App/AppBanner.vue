@@ -1,20 +1,6 @@
 <script setup>
   const { data } = await usePlaywright().fetchData();
-
-  const arDate = computed(() => {
-    // Convert the recieved dd/mm/yyyy format to yyyy/mm/dd
-    const yyddmmDate = new Date(
-      data.value.date.fullDate.split('/').reverse().join('/')
-    );
-
-    // Translate the date to arabic
-    return yyddmmDate.toLocaleDateString('ar-EG', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      weekday: 'long',
-    });
-  });
+  const arDate = data.value.date.ar;
 </script>
 
 <template>

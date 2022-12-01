@@ -18,6 +18,10 @@ export default defineEventHandler(async () => {
     const page = await initPlaywrightPage(browser);
     await page.goto(liveOnSatPageUrl, { timeout });
 
+    // Selecting Egypt Timezone (+2 GMT)
+    await page.locator('#selecttz').selectOption('Africa/Cairo');
+    await page.waitForLoadState(); // Wait for the page to reflect the timezone change
+
     // Scraping fixtures data
     const competitions = await scrapeCompetitions(page, supportedCompetitons);
 

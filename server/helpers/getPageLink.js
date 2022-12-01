@@ -6,10 +6,10 @@ import { isProduction } from './isProduction';
 const samplePage = path.resolve(process.env.PLAYWRIGHT_SAMPLE_PAGE_PATH);
 
 export function getPageLink() {
-  const { _, day, month, year } = getDate().today();
+  const { en } = getDate().today();
 
   const liveOnSatLink = 'https://liveonsat.com/2day.php';
-  const todaysLink = `${liveOnSatLink}?start_dd=${day}&start_mm=${month}&start_yyyy=${year}&end_dd=${day}&end_mm=${month}&end_yyyy=${year}`;
+  const todaysLink = `${liveOnSatLink}?start_dd=${en.day}&start_mm=${en.month}&start_yyyy=${en.year}&end_dd=${en.day}&end_mm=${en.month}&end_yyyy=${en.year}`;
 
   return isProduction() ? todaysLink : samplePage;
 }
