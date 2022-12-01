@@ -65,6 +65,8 @@ export function competitionEvaluator(CompetitionNodes) {
     const mena = getMenaChannels(allChannels);
     const { free, encrypted } = getOtherChannels(allChannels);
 
+    sortChannelsNames(free);
+    sortChannelsNames(encrypted);
     return { mena, free, encrypted };
   }
 
@@ -90,7 +92,7 @@ export function competitionEvaluator(CompetitionNodes) {
       if (channel.satInfo?.length) menaChannels.push(channel);
     });
 
-    sortMenaChannelsNames(menaChannels);
+    sortChannelsNames(menaChannels);
     return menaChannels;
   }
 
@@ -153,14 +155,14 @@ export function competitionEvaluator(CompetitionNodes) {
     return channel.classList.contains('chan_live_free') ? true : false;
   }
 
-  function sortMenaChannelsNames(menaChannels) {
+  function sortChannelsNames(menaChannels) {
     // Sorting Priority:
     // 1- Free
     // 2- 4K
     // 3- HD
     // 4- Bein (Global, Premium , Max then other channels)
     // 5- Al Kass
-    // 6- By Name
+    // 6- Other Channels By Name
     const compareFunction = (a, b) => {
       const freeA = a.mainInfo.isFree;
       const freeB = b.mainInfo.isFree;
