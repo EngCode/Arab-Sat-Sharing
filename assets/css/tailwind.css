@@ -12,7 +12,7 @@
   }
 
   .caption {
-    @apply inline-block text-sm text-gray-300 dark:text-blue-100;
+    @apply mr-1 inline text-sm text-gray-300 dark:text-blue-100;
   }
 
   .app-modal {
