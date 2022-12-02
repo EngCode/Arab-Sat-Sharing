@@ -1,0 +1,15 @@
+name: Redeploy on Vercel
+
+on:
+  # Triggers the workflow every 3 hours
+  schedule:
+    - cron: "0 */3 * * *"
+    
+jobs:
+  cron:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger vercel deploy hook to rebuild the app with the new data
+        uses: wei/curl@master
+        with:
+          args: -X POST ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
