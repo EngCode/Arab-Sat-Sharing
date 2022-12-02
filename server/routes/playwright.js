@@ -9,6 +9,7 @@ import { getDate } from '../helpers/getDate';
 const liveOnSatPageUrl = getPageLink(); // Could be live or sample page,depending on procces.env.IS_PRODUCTION
 const supportedCompetitons = getSupportedCompetitons();
 const timeout = Number(process.env.PLAYWRIGHT_TIMEOUT);
+const timezone = process.env.PLAYWRIGHT_TIMEZONE;
 const date = getDate().today();
 
 export default defineEventHandler(async () => {
@@ -19,7 +20,7 @@ export default defineEventHandler(async () => {
     await page.goto(liveOnSatPageUrl, { timeout });
 
     // Selecting Egypt Timezone (+2 GMT)
-    await page.locator('#selecttz').selectOption('Africa/Cairo');
+    await page.locator('#selecttz').selectOption(timezone);
     await page.waitForLoadState(); // Wait for the page to reflect the timezone change
 
     // Scraping fixtures data
@@ -28,7 +29,7 @@ export default defineEventHandler(async () => {
     // Closing the browser
     await browser.close();
 
-    //Returning data
+    // Returning data
     return { date, competitions };
   } catch (error) {
     console.log(error);
