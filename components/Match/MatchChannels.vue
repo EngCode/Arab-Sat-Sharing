@@ -18,14 +18,20 @@
       </div>
 
       <div class="flex items-center gap-2">
-        <div
-          class="grid h-3 w-3 place-content-center rounded-full bg-blue-400 p-3 text-sm font-semibold text-white"
-        >
-          <p>{{ channels.length }}</p>
-        </div>
+        <p class="tag bg-blue-400 text-sm font-bold leading-6">
+          {{ channels.length }}
+        </p>
 
         <BaseToggleButton v-model:is-active="isChannelsVisible" />
       </div>
+
+      <!-- <div class="flex items-center gap-2">
+        <p class="tag bg-blue-400 text-sm">
+          {{ channels.length }}
+        </p>
+
+        <BaseToggleButton v-model:is-active="isChannelsVisible" />
+      </div> -->
     </div>
 
     <div class="mt-2 flex flex-col gap-2" v-if="isChannelsVisible">
