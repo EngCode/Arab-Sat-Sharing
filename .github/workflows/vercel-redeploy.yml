@@ -3,7 +3,7 @@ name: Redeploy on Vercel
 on:
   # Triggers the workflow every 3 hours
   schedule:
-    - cron: "0 */3 * * *"
+    - cron: "0 */1 * * *"
     
 jobs:
   cron:
