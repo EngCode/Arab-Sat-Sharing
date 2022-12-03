@@ -11,14 +11,23 @@
   <div class="match-heading">
     <div class="team team--home">
       <p class="font-lg font-medium">{{ teams.homeTeam }}</p>
-      <BaseImg :src="imgUrl.getTeamUrl(teams.homeTeam)" width="24" />
+
+      <BaseImg
+        :src="imgUrl.getTeamUrl(teams.homeTeam)"
+        width="64"
+        class="h-6 w-6"
+      />
     </div>
 
     <span class="time">{{ time.full }}</span>
 
     <div class="team team--away">
       <p class="font-lg font-medium">{{ teams.awayTeam }}</p>
-      <BaseImg :src="imgUrl.getTeamUrl(teams.awayTeam)" width="24" />
+      <BaseImg
+        :src="imgUrl.getTeamUrl(teams.awayTeam)"
+        width="64"
+        class="h-6 w-6"
+      />
     </div>
   </div>
 </template>

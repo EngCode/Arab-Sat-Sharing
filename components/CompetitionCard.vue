@@ -9,7 +9,11 @@
   <div v-auto-animate>
     <div class="flex items-center justify-between">
       <div class="flex items-center gap-2">
-        <BaseImg :src="imgUrl.getCompetitionUrl(competition.name)" width="32" />
+        <BaseImg
+          :src="imgUrl.getCompetitionUrl(competition.name)"
+          class="h-8 w-8"
+          width="72"
+        />
         <h2 class="text-xl font-medium text-blue-300 dark:text-blue-200">
           {{ competition.name }}
         </h2>

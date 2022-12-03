@@ -6,7 +6,11 @@
 
 <template>
   <div class="flex items-center gap-2">
-    <BaseImg :src="imgUrl.getCompetitionUrl(competition.name)" width="24" />
+    <BaseImg
+      :src="imgUrl.getCompetitionUrl(competition.name)"
+      class="h-6 w-6"
+      width="64"
+    />
     <p>{{ competition.name }} - {{ competition.stage }}</p>
   </div>
 </template>

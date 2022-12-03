@@ -1,5 +1,5 @@
 <script setup>
-  const { data, error } = await usePlaywright().fetchData();
+  const { data, error } = await usePlaywright().fetchSampleData();
 </script>
 
 <template>

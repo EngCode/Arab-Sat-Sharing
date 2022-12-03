@@ -37,7 +37,7 @@
     <div>
       <BaseImg
         :src="imgUrl.getChannelUrl(channelMainInfo.name)"
-        width="24px"
+        width="64"
         class="inline-block h-6 w-6 object-contain"
       />
       <p class="ml-2 inline-block">{{ channelMainInfo.name }}</p>
