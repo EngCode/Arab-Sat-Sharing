@@ -37,7 +37,7 @@ export default defineNuxtConfig({
         },
         {
           rel: 'stylesheet',
-          href: 'https://fonts.bunny.net/css?family=tajawal:400,500,700,800',
+          href: 'https://fonts.bunny.net/css?family=tajawal:400,500,700,800&display=swap',
         },
       ],
 
