@@ -8,7 +8,7 @@
 
 <template>
   <ClientOnly>
-    <button @click="toggleColorMode">
+    <button @click="toggleColorMode" aria-label="Toggle white/dark mode">
       <Icon name="bx:sun" size="20px" v-if="colorMode.value === 'light'" />
       <Icon name="bx:moon" size="20px" v-else />
     </button>

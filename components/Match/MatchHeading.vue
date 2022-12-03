@@ -14,6 +14,7 @@
 
       <BaseImg
         :src="imgUrl.getTeamUrl(teams.homeTeam)"
+        :alt="`${teams.homeTeam} emblem`"
         width="64"
         class="h-6 w-6"
       />
@@ -25,6 +26,7 @@
       <p class="font-lg font-medium">{{ teams.awayTeam }}</p>
       <BaseImg
         :src="imgUrl.getTeamUrl(teams.awayTeam)"
+        :alt="`${teams.awayTeam} emblem`"
         width="64"
         class="h-6 w-6"
       />
