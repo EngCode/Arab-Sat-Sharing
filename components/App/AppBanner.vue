@@ -12,12 +12,8 @@
         {{ data.date.ar }}
       </h2>
 
-      <BaseInfo>يتم تحديث المباريات كل 3 ساعات يومياً.</BaseInfo>
       <BaseInfo>جميع مواعيد المباريات بتوقيت مصر (+2 GMT).</BaseInfo>
       <BaseInfo>اضغط علي القناة لمعرفة جميع الترددات المتاحة.</BaseInfo>
-      <BaseInfo>
-        القنوات مرتبة ابجدياً كالتالي: المجانية، قنوات 4K ، قنوات HD، قنوات SD،
-      </BaseInfo>
     </div>
   </section>
 </template>
