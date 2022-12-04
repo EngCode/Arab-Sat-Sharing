@@ -6,7 +6,7 @@
 
 <template>
   <div
-    class="flex flex-col justify-between 2xs:flex-row-reverse 2xs:items-center"
+    class="flex flex-col justify-between gap-1.5 2xs:flex-row-reverse 2xs:items-center"
   >
     <!-- isFree & Resoultion -->
     <div class="flex items-center gap-1.5">
@@ -34,7 +34,7 @@
     </div>
 
     <!-- Name & Image -->
-    <div>
+    <div class="flex items-center">
       <BaseImg
         :src="imgUrl.getChannelUrl(channelMainInfo.name)"
         width="64"
