@@ -2,46 +2,34 @@ import settings from '../settings';
 
 const twitter = [
   { name: 'twitter:card', content: 'summary_large_image' },
-  { name: 'twitter:site', content: '@MuhammadM1998' },
+  { name: 'twitter:site', content: settings.twitterHandle },
   {
     property: 'twitter:domain',
-    content: 'https://arab-sat-sharing.vercel.app/',
+    content: settings.url,
   },
   {
     property: 'twitter:url',
-    content: 'https://arab-sat-sharing.vercel.app/',
-  },
-  {
-    property: 'twitter:image',
-    content:
-      'https://res.cloudinary.com/cloud-m98/image/upload/v1663009658/Portfolio/Website-Screenshot.png',
+    content: settings.url,
   },
   {
     hid: 'twitter:title',
     property: 'twitter:title',
-    content: 'Arab Sat Sharing - سات شيرنج العرب',
+    content: settings.title,
   },
   {
     hid: 'twitter:description',
     property: 'twitter:description',
-    content: 'جدول مباريات اليوم مع قنوات الشيرنج الناقلة علي جميع الأقمار',
+    content: settings.description,
   },
   {
     hid: 'twitter:image',
     name: 'twitter:image',
-    content:
-      'https://res.cloudinary.com/alvarosaburido/image/upload/v1563876252/alvaro-saburido-portfolio.png',
+    content: settings.imageUrl,
   },
   {
     hid: 'twitter:image:alt',
     name: 'twitter:image:alt',
-    content:
-      'https://res.cloudinary.com/alvarosaburido/image/upload/v1563876252/alvaro-saburido-portfolio.png',
-  },
-  {
-    hid: 'twitter:image:alt',
-    name: 'twitter:image:alt',
-    content: 'جدول مباريات اليوم مع قنوات الشيرنج الناقلة علي جميع الأقمار',
+    content: settings.imageAlt || settings.description,
   },
 ];
 
