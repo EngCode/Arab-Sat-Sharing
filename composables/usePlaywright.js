@@ -1,5 +1,6 @@
 import sampleData from '~/assets/sample-data.json';
-const isProduction = process.env.NODE_ENV === 'production';
+
+const isProduction = process.env.NODE_ENV.match(/^(prerender|production)$/);
 
 export default function () {
   return {
