@@ -1,4 +1,4 @@
-const FONTS = [
+const fonts = [
   {
     rel: 'preconnect',
     href: 'https://fonts.bunny.net',
@@ -12,4 +12,4 @@ const FONTS = [
   },
 ];
 
-export default FONTS;
+export default fonts;

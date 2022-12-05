@@ -3,6 +3,7 @@ const settings = {
   author: 'Muhammad Mahmoud',
   twitterHandle: '@MuhammadM1998',
   title: 'Arab Sat Sharing - سات شيرنج العرب',
+  shortName: 'سات شيرنج العرب',
   description: 'جدول مباريات اليوم مع قنوات الشيرنج الناقلة علي جميع الأقمار',
   url: 'https://arab-sat-sharing.vercel.app/',
   imageUrl:

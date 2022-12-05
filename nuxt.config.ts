@@ -1,4 +1,7 @@
 import head from './config/head';
+import manifest from './config/pwa/manifest';
+import icon from './config/pwa/icon';
+import meta from './config/pwa/meta';
 
 export default defineNuxtConfig({
   app: { head },
@@ -10,6 +13,7 @@ export default defineNuxtConfig({
     '@nuxt/image-edge',
     '@vueuse/nuxt',
     '@nuxtjs/robots',
+    '@kevinmarrec/nuxt-pwa',
   ],
 
   colorMode: { classSuffix: '' },
@@ -33,4 +37,6 @@ export default defineNuxtConfig({
       xxl: 1440,
     },
   },
+
+  pwa: { meta, icon, manifest },
 });
