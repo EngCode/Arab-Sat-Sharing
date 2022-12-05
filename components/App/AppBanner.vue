@@ -14,6 +14,10 @@
 
       <BaseInfo>جميع مواعيد المباريات بتوقيت مصر (+2 GMT).</BaseInfo>
       <BaseInfo>اضغط علي القناة لمعرفة جميع الترددات المتاحة.</BaseInfo>
+      <BaseInfo>
+        اضغط علي الزر <Icon name="iconoir:screenshot" /> لحفظ صورة من بطاقة
+        المباراة.
+      </BaseInfo>
     </div>
   </section>
 </template>
