@@ -43,7 +43,6 @@
     "prettier": "^2.7.1",
     "prettier-plugin-tailwindcss": "^0.2.0",
     "sass": "^1.56.1",
-    "sass-loader": "^13.2.0",
-    "@pinia-plugin-persistedstate/nuxt": "^1.0.0"
+    "sass-loader": "^13.2.0"
   }
 }

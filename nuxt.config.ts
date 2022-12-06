@@ -15,7 +15,6 @@ export default defineNuxtConfig({
     '@nuxtjs/robots',
     '@kevinmarrec/nuxt-pwa',
     '@pinia/nuxt',
-    '@pinia-plugin-persistedstate/nuxt',
   ],
 
   imports: {

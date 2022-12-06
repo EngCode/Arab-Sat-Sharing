@@ -3,13 +3,6 @@ export const useChannelsStore = defineStore('channels', {
     isChannelsHidden: false,
   }),
 
-  persist: {
-    storage: persistedState.cookiesWithOptions({
-      sameSite: 'strict',
-      maxAge: 432000, // 5 days
-    }),
-  },
-
   getters: {
     getIsChannelsHidden: (state) => state.isChannelsHidden,
   },
