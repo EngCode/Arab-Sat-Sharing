@@ -141,10 +141,20 @@ export function competitionEvaluator(CompetitionNodes) {
   }
 
   function isMenaChannel(channelName) {
-    return channelName.includes('beIN Sports MENA') ||
-      channelName.includes('Al Kass')
-      ? true
-      : false;
+    const menaChannels = [
+      'beIN Sports MENA',
+      'Al Kass',
+      'AD Sports',
+      'Dubai Sports',
+      'Al Aoula Morocco',
+      'Arryadia TNT',
+    ];
+
+    const isMenaChannel = menaChannels.find((menaChannelName) =>
+      channelName.includes(menaChannelName)
+    );
+
+    return isMenaChannel !== undefined ? true : false;
   }
 
   function isOnlineChannel(channelName) {

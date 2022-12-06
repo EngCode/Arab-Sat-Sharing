@@ -12,6 +12,9 @@
       class="h-6 w-6"
       width="64"
     />
-    <p>{{ competition.name }} - {{ competition.stage }}</p>
+    <p>
+      {{ competition.name }}
+      <span v-if="competition.stage"> - {{ competition.stage }}</span>
+    </p>
   </div>
 </template>
