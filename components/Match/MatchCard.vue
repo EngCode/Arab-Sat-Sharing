@@ -1,6 +1,7 @@
 <script setup>
-  const props = defineProps({ match: { type: Object, required: true } });
+  const channelsStore = useChannelsStore();
 
+  const props = defineProps({ match: { type: Object, required: true } });
   const mena = props.match.channels.mena;
   const free = props.match.channels.free;
   const encrypted = props.match.channels.encrypted;
@@ -13,6 +14,7 @@
     v-if="match"
     ref="matchRef"
     class="flex flex-col gap-2 rounded bg-gray-100 p-4 dark:bg-blue-500"
+    :class="{ 'pb-0': channelsStore.getIsChannelsHidden }"
   >
     <div class="flex items-center justify-between gap-2">
       <MatchCompetition :competition="match.competition" />

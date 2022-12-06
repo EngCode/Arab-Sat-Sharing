@@ -1,7 +1,7 @@
 import head from './config/head';
-import manifest from './config/pwa/manifest';
-import icon from './config/pwa/icon';
 import meta from './config/pwa/meta';
+import icon from './config/pwa/icon';
+import manifest from './config/pwa/manifest';
 
 export default defineNuxtConfig({
   app: { head },
@@ -14,7 +14,17 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     '@nuxtjs/robots',
     '@kevinmarrec/nuxt-pwa',
+    '@pinia/nuxt',
+    '@pinia-plugin-persistedstate/nuxt',
   ],
+
+  imports: {
+    dirs: ['./stores'], // Auto import Pinia stores
+  },
+
+  pinia: {
+    autoImports: ['defineStore', 'acceptHMRUpdate'],
+  },
 
   colorMode: { classSuffix: '' },
 
@@ -38,5 +48,5 @@ export default defineNuxtConfig({
     },
   },
 
-  pwa: { meta, icon, manifest },
+  pwa: { workbox: { enabled: false }, meta, icon, manifest },
 });

@@ -1,5 +1,6 @@
 <script setup>
   const { data } = await usePlaywright().fetchData();
+  const channelsStore = useChannelsStore();
 </script>
 
 <template>
@@ -11,6 +12,14 @@
       <h2 class="font-medium text-blue-300 dark:text-blue-200">
         {{ data.date.ar }}
       </h2>
+
+      <BaseToggleSwitch
+        :is-active="channelsStore.getIsChannelsHidden"
+        @click="channelsStore.toggleChannels"
+        class="my-2 text-start"
+      >
+        إخفاء القنوات الناقلة (عرض مواعيد المباريات فقط)
+      </BaseToggleSwitch>
 
       <BaseInfo>جميع مواعيد المباريات بتوقيت مصر (+2 GMT).</BaseInfo>
       <BaseInfo>اضغط علي القناة لمعرفة جميع الترددات المتاحة.</BaseInfo>

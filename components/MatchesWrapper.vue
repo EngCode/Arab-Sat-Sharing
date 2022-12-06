@@ -4,6 +4,11 @@
 
 <template>
   <div class="mt-2 flex flex-col gap-2">
-    <MatchCard v-for="(match, index) in matches" :key="index" :match="match" />
+    <MatchCard
+      v-auto-animate
+      v-for="(match, index) in matches"
+      :key="index"
+      :match="match"
+    />
   </div>
 </template>

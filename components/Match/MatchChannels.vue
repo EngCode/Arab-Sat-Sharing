@@ -1,14 +1,13 @@
 <script setup>
   defineProps({ channels: { type: Array, required: true } });
-  const isChannelsVisible = ref(false);
-
-  const isModalVisible = ref(false);
+  const channelsStore = useChannelsStore(); // Global State Switch Button
+  const isChannelsVisible = ref(false); // Component Arrow Button
 </script>
 
 <template>
   <div
     v-auto-animate
-    v-if="channels.length"
+    v-if="!channelsStore.getIsChannelsHidden && channels.length"
     class="border-t border-gray-200 pt-2 dark:border-blue-400"
   >
     <div class="flex items-center justify-between gap-2 [direction:rtl]">
