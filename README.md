@@ -9,7 +9,7 @@
 - 💚 Made with Nuxt as an SSG for a **_blazingly fast_** experience
 - 🎭 Based on LiveOnSat data, the biggest online source for football matches guide with tv broadcasters
 - 🦾 Updated automatically with new data
-- 🏆 Supports 25 major competitions ([see full list](./server/assets/suppportedCompetitions.yml))
+- 🏆 Supports 26 major competitions ([see full list](./server/assets/suppportedCompetitions.yml))
 - 📸 Supports downloading screenshots of match cards
 - 🎨 White/Dark modes
 - 📲 PWA coming soon!
