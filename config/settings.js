@@ -7,7 +7,7 @@ const settings = {
   description: 'جدول مباريات اليوم مع قنوات الشيرنج الناقلة علي جميع الأقمار',
   url: 'https://arab-sat-sharing.vercel.app/',
   imageUrl:
-    'https://res.cloudinary.com/cloud-m98/image/upload/v1663009658/Portfolio/Website-Screenshot.png',
+    'https://res.cloudinary.com/cloud-m98/image/upload/v1670329322/Arab%20Sat%20Sharing/Opengraph.png',
   imageAlt: '',
   keywords: ['TV Guide', 'Satellite Sharing', 'Sat Sharing'],
 };
