@@ -45,7 +45,11 @@ export function competitionEvaluator(CompetitionNodes) {
     const originalTime = matchNode.querySelector('.fLeft_time_live').innerText;
 
     const fullTime = originalTime.split(' ')[1];
-    const originalHours = fullTime.split(':')[0];
+    const originalHours =
+      process.env.ENABLE_DAYLIGHT_SAVING_TIME === 'true'
+        ? fullTime.split(':')[0] + 1
+        : fullTime.split(':')[0];
+
     const formattedHours =
       originalHours > 12
         ? (originalHours - 12).toString().padStart(2, '0')
