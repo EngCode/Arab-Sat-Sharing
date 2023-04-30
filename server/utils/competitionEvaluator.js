@@ -45,7 +45,7 @@ export function competitionEvaluator(CompetitionNodes) {
     const originalTime = matchNode.querySelector('.fLeft_time_live').innerText;
 
     const fullTime = originalTime.split(' ')[1];
-    const originalHours = fullTime.split(':')[0] + 1; // The plus 1 is a workaround to support day time saving, Remove it later and do it via a .env variable
+    const originalHours = Number(fullTime.split(':')[0]) + 1; // The plus 1 is a workaround to support day time saving, Remove it later and do it via a .env variable
 
     const formattedHours =
       originalHours > 12
