@@ -45,10 +45,7 @@ export function competitionEvaluator(CompetitionNodes) {
     const originalTime = matchNode.querySelector('.fLeft_time_live').innerText;
 
     const fullTime = originalTime.split(' ')[1];
-    const originalHours =
-      process.env.ENABLE_DAYLIGHT_SAVING_TIME === 'true'
-        ? fullTime.split(':')[0] + 1
-        : fullTime.split(':')[0];
+    const originalHours = Number(fullTime.split(':')[0]) + 1; // The plus 1 is a workaround to support day time saving, Remove it later and do it via a .env variable
 
     const formattedHours =
       originalHours > 12
