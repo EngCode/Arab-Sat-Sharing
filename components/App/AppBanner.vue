@@ -21,7 +21,7 @@
         إخفاء القنوات الناقلة (عرض مواعيد المباريات فقط)
       </BaseToggleSwitch>
 
-      <BaseInfo>جميع مواعيد المباريات بتوقيت مصر (+2 GMT).</BaseInfo>
+      <BaseInfo>جميع مواعيد المباريات بتوقيت مصر (+3 GMT).</BaseInfo>
       <BaseInfo>اضغط علي القناة لمعرفة جميع الترددات المتاحة.</BaseInfo>
       <BaseInfo>
         اضغط علي الزر <Icon name="iconoir:screenshot" /> لحفظ صورة من بطاقة
