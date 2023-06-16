@@ -35,7 +35,7 @@ export function competitionEvaluator(CompetitionNodes) {
 
   function getMatchName(matchNode) {
     const fullText = matchNode.querySelector('.fLeft').textContent;
-    if (!fullText.includes(' v ')) return null;
+    if (!fullText.includes(' v ') || fullText.includes('Israel')) return null;
 
     const [homeTeam, awayTeam] = fullText.split(' v ');
     return { fullText, homeTeam, awayTeam };
